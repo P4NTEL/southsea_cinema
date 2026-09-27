@@ -16,10 +16,14 @@ class MovieListing extends StatelessWidget {
       ),
       drawer: const NavDrawer(),
       body: Container(
-        child: Row(
+        child: Column(
           children:[
-            Text('How To Train Your Dragon: The Hidden World'),
-            Text('A young viking changes his way of seeing a dragon and learns to see the world in a new way.'),
+            Row(
+              children: [
+                Text('How To Train Your Dragon: The Hidden World'),
+                Text('A young viking changes his way of seeing a dragon and learns to see the world in a new way.'),
+              ],
+            )
           ],
         ),
       ),
