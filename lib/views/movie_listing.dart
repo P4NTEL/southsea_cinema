@@ -15,7 +15,14 @@ class MovieListing extends StatelessWidget {
         elevation: 0,
       ),
       drawer: const NavDrawer(),
-      body: const SizedBox.shrink(),
+      body: Container(
+        child: Row(
+          children:[
+            Text('How To Train Your Dragon: The Hidden World'),
+            Text('A young viking changes his way of seeing a dragon and learns to see the world in a new way.'),
+          ],
+        ),
+      ),
     );
   }
 }
