@@ -1,6 +1,8 @@
-{
+﻿{
   "dart.defaultFlutterDevice": "edge",
   "dart.flutterSelectDeviceWhenConnected": false,
   "dart.runPubGetOnPubspecChanges": "always",
-  "security.workspace.trust.enabled": false
+  "security.workspace.trust.enabled": false,
+  "security.workspace.trust.startupPrompt": "never",
+  "security.workspace.trust.banner": "never"
 }

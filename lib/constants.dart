@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const String appTitle = 'Southsea Cinema';
+const String appTitle = 'Southsea Cinema & Arts Centre';
 
 const Color cinemaBrand = Color(0xFF55BEDE);
 const Color cinemaBrandLight = Color(0xFF7FCEE6);
