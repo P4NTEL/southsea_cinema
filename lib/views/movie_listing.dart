@@ -46,6 +46,19 @@ class _MovieListingState extends State<MovieListing>{
                 DropdownMenuEntry(value: 5, label: '5'),
               ],
             ),
+                ElevatedButton(
+      onPressed: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Added $_ticketQuantity ticket(s) to your order',
+            ),
+          ),
+        );
+      },
+      child: const Text('Add to order'),
+    ),
+            
           ],
         ),
       ),
