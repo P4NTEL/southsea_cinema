@@ -86,38 +86,82 @@ class _MovieListingState extends State<MovieListing>{
 
               const SizedBox(height: 22),
 
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  if (constraints.maxWidth > 600) {
+                    
+                    return Row(
+                      children: [
+                        Row(
+                          children: [
+                            DropdownMenu<int>(
+                              initialSelection: 1,
+                              onSelected: (int? value) {
+                                if (value != null) {
+                                  setState(() {
+                                    _ticketQuantity = value;
+                                  });
+                                }
+                              },
+                              dropdownMenuEntries: const [
+                                DropdownMenuEntry(value: 1, label: '1'),
+                                DropdownMenuEntry(value: 2, label: '2'),
+                                DropdownMenuEntry(value: 3, label: '3'),
+                                DropdownMenuEntry(value: 4, label: '4'),
+                                DropdownMenuEntry(value: 5, label: '5'),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 15),
 
-              Row(
-                children: [
-                  DropdownMenu<int>(
-                    initialSelection: 1,
-                    onSelected: (int? value) {
-                      if (value != null) {
-                        setState(() {
-                          _ticketQuantity = value;
-                        });
-                      }
-                    },
-                    dropdownMenuEntries: const [
-                      DropdownMenuEntry(value: 1, label: '1'),
-                      DropdownMenuEntry(value: 2, label: '2'),
-                      DropdownMenuEntry(value: 3, label: '3'),
-                      DropdownMenuEntry(value: 4, label: '4'),
-                      DropdownMenuEntry(value: 5, label: '5'),
-                    ],
-                  ),
+                        const Text(
+                          'Adult (£7.50)',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: cinemaFontWhite,
+                          ),
+                        ),
+                      ],
+                    );
+                  } 
+                  
+                  else {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              DropdownMenu<int>(
+                                initialSelection: 1,
+                                onSelected: (int? value) {
+                                  if (value != null) {
+                                    setState(() {
+                                      _ticketQuantity = value;
+                                    });
+                                  }
+                                },
+                                dropdownMenuEntries: const [
+                                  DropdownMenuEntry(value: 1, label: '1'),
+                                  DropdownMenuEntry(value: 2, label: '2'),
+                                  DropdownMenuEntry(value: 3, label: '3'),
+                                  DropdownMenuEntry(value: 4, label: '4'),
+                                  DropdownMenuEntry(value: 5, label: '5'),
+                                ],
+                              ),
 
-                  const SizedBox(width: 15),
+                              const SizedBox(height: 15),
 
-                  const Text(
-                    'Adult (£7.50)',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: cinemaFontWhite,
+                              const Text(
+                                'Adult (£7.50)',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: cinemaFontWhite,
+                                ),
+                              ),
+                            ],
+                          );
+                        }
+                      },
                     ),
-                  ),
-                ],
-              ),
 
             const SizedBox(height: 30),
 
