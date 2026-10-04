@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/models/movie.dart';
+import 'package:southsea_cinema/views/movie_listing.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -25,7 +26,7 @@ class MovieCard extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: cinemaBrand,
+                      color: cinemaFontWhite,
                     ),
                   ),
                 ),
@@ -35,7 +36,7 @@ class MovieCard extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: cinemaFontWhite,
+                    color: cinemaBrand,
                   ),
                 ),
               ],
@@ -63,6 +64,14 @@ class MovieCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 8),
+                      Text(
+                        '£${movie.adultprice.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: cinemaFontWhite,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -92,7 +101,16 @@ class MovieCard extends StatelessWidget {
                     backgroundColor: cinemaBrand,
                     foregroundColor: cinemaFontWhite,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return MovieListing(movie: movie);
+                        },
+                      ),
+                    );
+                  },
                   child: const Text('BOOK NOW'),
                 ),
               ],

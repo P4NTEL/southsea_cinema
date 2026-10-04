@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
+import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
 
 class MovieListing extends StatefulWidget {
-  const MovieListing({super.key});
+  final Movie movie;
+
+  const MovieListing({super.key, required this.movie});
 
   @override
   State<MovieListing> createState() => _MovieListingState();
@@ -28,9 +31,9 @@ class _MovieListingState extends State<MovieListing> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'How To Train Your Dragon (2025)',
-              style: TextStyle(
+            Text(
+              widget.movie.title,
+              style: const TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.bold,
                 color: cinemaFontWhite,
@@ -39,9 +42,9 @@ class _MovieListingState extends State<MovieListing> {
 
             const SizedBox(height: 45),
 
-            const Text(
-              'Southsea Cinema Room',
-              style: TextStyle(
+            Text(
+              widget.movie.room,
+              style: const TextStyle(
                 fontSize: 18,
                 color: cinemaFontWhite,
               ),
@@ -49,9 +52,9 @@ class _MovieListingState extends State<MovieListing> {
 
             const SizedBox(height: 22),
 
-            const Text(
-              'Thursday 22 Oct 2026, 18:00 - ends at 20:05',
-              style: TextStyle(
+            Text(
+              widget.movie.datetime,
+              style: const TextStyle(
                 fontSize: 18,
                 color: cinemaFontWhite,
               ),
@@ -115,9 +118,9 @@ class _MovieListingState extends State<MovieListing> {
 
                       const SizedBox(width: 15),
 
-                      const Text(
-                        'Adult (£7.50)',
-                        style: TextStyle(
+                      Text(
+                        'Adult (£${widget.movie.adultprice.toStringAsFixed(2)})',
+                        style: const TextStyle(
                           fontSize: 18,
                           color: cinemaFontWhite,
                         ),
@@ -148,9 +151,9 @@ class _MovieListingState extends State<MovieListing> {
 
                       const SizedBox(height: 15),
 
-                      const Text(
-                        'Adult (£7.50)',
-                        style: TextStyle(
+                      Text(
+                        'Adult (£${widget.movie.adultprice.toStringAsFixed(2)})',
+                        style: const TextStyle(
                           fontSize: 18,
                           color: cinemaFontWhite,
                         ),
