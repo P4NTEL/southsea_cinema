@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
@@ -12,6 +11,7 @@ class MovieListing extends StatefulWidget {
 
 class _MovieListingState extends State<MovieListing> {
   int _ticketQuantity = 1;
+  String _feedback = '';
 
   @override
   Widget build(BuildContext context) {
@@ -172,15 +172,21 @@ class _MovieListingState extends State<MovieListing> {
                 ),
               ),
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      'Added $_ticketQuantity ticket(s) to your order',
-                    ),
-                  ),
-                );
+                setState(() {
+                  _feedback = 'Added $_ticketQuantity ticket(s) to your order';
+                });
               },
               child: const Text('Add to order'),
+            ),
+
+            const SizedBox(height: 16),
+
+            Text(
+              _feedback,
+              style: const TextStyle(
+                fontSize: 18,
+                color: cinemaFontWhite,
+              ),
             ),
           ],
         ),
