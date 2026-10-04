@@ -18,6 +18,30 @@ class MovieCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              children: [
+                Flexible(
+                  child: Text(
+                    movie.title,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: cinemaBrand,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  movie.agerate,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: cinemaFontWhite,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.asset(
@@ -32,24 +56,6 @@ class MovieCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        movie.title,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: cinemaFontWhite,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        movie.agerate,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: cinemaBrand,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
                         movie.description,
                         style: const TextStyle(
                           fontSize: 16,
@@ -57,27 +63,27 @@ class MovieCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      Text(
-                        movie.datetime,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: cinemaFontWhite,
-                        ),
-                      ),
                     ],
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 16),
+            const Text(
+              'BOOK TICKETS',
+              style: TextStyle(
+                fontSize: 16,
+                color: cinemaFontWhite,
+              ),
+            ),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '£${movie.adultprice.toStringAsFixed(2)}',
+                  movie.datetime,
                   style: const TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
                     color: cinemaFontWhite,
                   ),
                 ),
@@ -87,7 +93,7 @@ class MovieCard extends StatelessWidget {
                     foregroundColor: cinemaFontWhite,
                   ),
                   onPressed: () {},
-                  child: const Text('Book'),
+                  child: const Text('BOOK NOW'),
                 ),
               ],
             ),
