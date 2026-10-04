@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
@@ -8,8 +9,10 @@ class MovieListing extends StatefulWidget {
   @override
   State<MovieListing> createState() => _MovieListingState();
 }
-class _MovieListingState extends State<MovieListing>{
+
+class _MovieListingState extends State<MovieListing> {
   int _ticketQuantity = 1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,12 +24,10 @@ class _MovieListingState extends State<MovieListing>{
       ),
       drawer: const NavDrawer(),
       body: Container(
- 
- 
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children:[
+          children: [
             const Text(
               'How To Train Your Dragon (2025)',
               style: TextStyle(
@@ -59,7 +60,7 @@ class _MovieListingState extends State<MovieListing>{
             const SizedBox(height: 45),
 
             const Text(
-              'Please note that Discounts / Membreship Benefits will be applied once you have selected you tickets',
+              'Please note that Discounts / Membership Benefits will be applied once you have selected your tickets',
               style: TextStyle(
                 fontSize: 18,
                 color: cinemaFontWhite,
@@ -74,119 +75,113 @@ class _MovieListingState extends State<MovieListing>{
                 fontSize: 18,
                 color: cinemaFontWhite,
               ),
+            ),
+
+            const SizedBox(height: 45),
+
+            const Text(
+              'Tickets',
+              style: TextStyle(
+                fontSize: 24,
+                color: cinemaFontWhite,
               ),
+            ),
 
-              const SizedBox(height: 45),
+            const SizedBox(height: 22),
 
-              const Text(
-                'Tickets',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: cinemaFontWhite,
-                ),
-              ),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                if (constraints.maxWidth > 600) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      DropdownMenu<int>(
+                        initialSelection: 1,
+                        onSelected: (int? value) {
+                          if (value != null) {
+                            setState(() {
+                              _ticketQuantity = value;
+                            });
+                          }
+                        },
+                        dropdownMenuEntries: const [
+                          DropdownMenuEntry(value: 1, label: '1'),
+                          DropdownMenuEntry(value: 2, label: '2'),
+                          DropdownMenuEntry(value: 3, label: '3'),
+                          DropdownMenuEntry(value: 4, label: '4'),
+                          DropdownMenuEntry(value: 5, label: '5'),
+                        ],
+                      ),
 
-              const SizedBox(height: 22),
+                      const SizedBox(width: 15),
 
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  if (constraints.maxWidth > 600) {
-                    
-                    return Row(
-                      children: [
-                        Row(
-                          children: [
-                            DropdownMenu<int>(
-                              initialSelection: 1,
-                              onSelected: (int? value) {
-                                if (value != null) {
-                                  setState(() {
-                                    _ticketQuantity = value;
-                                  });
-                                }
-                              },
-                              dropdownMenuEntries: const [
-                                DropdownMenuEntry(value: 1, label: '1'),
-                                DropdownMenuEntry(value: 2, label: '2'),
-                                DropdownMenuEntry(value: 3, label: '3'),
-                                DropdownMenuEntry(value: 4, label: '4'),
-                                DropdownMenuEntry(value: 5, label: '5'),
-                              ],
-                            ),
-                          ],
+                      const Text(
+                        'Adult (£7.50)',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: cinemaFontWhite,
                         ),
-                        const SizedBox(height: 15),
+                      ),
+                    ],
+                  );
+                } else {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      DropdownMenu<int>(
+                        initialSelection: 1,
+                        onSelected: (int? value) {
+                          if (value != null) {
+                            setState(() {
+                              _ticketQuantity = value;
+                            });
+                          }
+                        },
+                        dropdownMenuEntries: const [
+                          DropdownMenuEntry(value: 1, label: '1'),
+                          DropdownMenuEntry(value: 2, label: '2'),
+                          DropdownMenuEntry(value: 3, label: '3'),
+                          DropdownMenuEntry(value: 4, label: '4'),
+                          DropdownMenuEntry(value: 5, label: '5'),
+                        ],
+                      ),
 
-                        const Text(
-                          'Adult (£7.50)',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: cinemaFontWhite,
-                          ),
+                      const SizedBox(height: 15),
+
+                      const Text(
+                        'Adult (£7.50)',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: cinemaFontWhite,
                         ),
-                      ],
-                    );
-                  } 
-                  
-                  else {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              DropdownMenu<int>(
-                                initialSelection: 1,
-                                onSelected: (int? value) {
-                                  if (value != null) {
-                                    setState(() {
-                                      _ticketQuantity = value;
-                                    });
-                                  }
-                                },
-                                dropdownMenuEntries: const [
-                                  DropdownMenuEntry(value: 1, label: '1'),
-                                  DropdownMenuEntry(value: 2, label: '2'),
-                                  DropdownMenuEntry(value: 3, label: '3'),
-                                  DropdownMenuEntry(value: 4, label: '4'),
-                                  DropdownMenuEntry(value: 5, label: '5'),
-                                ],
-                              ),
-
-                              const SizedBox(height: 15),
-
-                              const Text(
-                                'Adult (£7.50)',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: cinemaFontWhite,
-                                ),
-                              ),
-                            ],
-                          );
-                        }
-                      },
-                    ),
+                      ),
+                    ],
+                  );
+                }
+              },
+            ),
 
             const SizedBox(height: 30),
 
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: cinemaBrand,
-                    foregroundColor: cinemaFontWhite,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: cinemaBrand,
+                foregroundColor: cinemaFontWhite,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'Added $_ticketQuantity ticket(s) to your order',
                     ),
                   ),
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          'Added $_ticketQuantity ticket(s) to your order',
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Text('Add to order'),
-                ),
-            
+                );
+              },
+              child: const Text('Add to order'),
+            ),
           ],
         ),
       ),
