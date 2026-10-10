@@ -19,4 +19,8 @@ const Movie({
     required this.image,
     required this.description,
   });
+
+  String get formattedPrice => '£${adultprice.toStringAsFixed(2)}';
+  bool get isChildFriendly => agerate == 'U' || agerate == 'PG';
+  bool get isAdultOnly => agerate == '18';
 }
