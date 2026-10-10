@@ -4,7 +4,7 @@ class MovieRepository {
   List<Movie> getMovies(){
     return const [
       Movie(
-        id: '1',
+        id: 'how-to-train-your-dragon',
         title: 'How To Train Your Dragon',
         room: 'Room 1',
         agerate: 'PG-13',
@@ -14,7 +14,7 @@ class MovieRepository {
         description: 'A young viking changes his opinion about dragons'
       ),
       Movie(
-        id: '2',
+        id: 'joker',
         title: 'Joker',
         room: 'Room 2',
         agerate: 'R',
@@ -26,4 +26,31 @@ class MovieRepository {
     ];
   }
 
+  Movie? getMovieById(String id){
+    for (final movie in getMovies()){
+      if(movie.id == id){
+        return movie;
+      }
+    }
+    return null;
+  }
+  List<Movie> getMoviesByAgeRating(String rating) {
+    final List<Movie> matches = [];
+    for (final movie in getMovies()) {
+      if (movie.agerate == rating) {
+        matches.add(movie);
+      }
+    }
+    return matches;
+  }
+ 
+  List<Movie> getMoviesUnderPrice(double maxPrice) {
+    final List<Movie> matches = [];
+    for (final movie in getMovies()) {
+      if (movie.adultprice < maxPrice) {
+        matches.add(movie);
+      }
+    }
+    return matches;
+  }
 }
