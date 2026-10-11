@@ -1,5 +1,5 @@
 class Movie {
-  final String id; 
+  final String id;
   final String title;
   final String room;
   final String agerate;
@@ -8,8 +8,7 @@ class Movie {
   final String image;
   final String description;
 
-
-const Movie({
+  const Movie({
     required this.id,
     required this.title,
     required this.room,

@@ -39,9 +39,7 @@ class _MovieListingState extends State<MovieListing> {
                 color: cinemaFontWhite,
               ),
             ),
-
             const SizedBox(height: 45),
-
             Text(
               widget.movie.room,
               style: const TextStyle(
@@ -49,9 +47,7 @@ class _MovieListingState extends State<MovieListing> {
                 color: cinemaFontWhite,
               ),
             ),
-
             const SizedBox(height: 22),
-
             Text(
               widget.movie.datetime,
               style: const TextStyle(
@@ -59,9 +55,7 @@ class _MovieListingState extends State<MovieListing> {
                 color: cinemaFontWhite,
               ),
             ),
-
             const SizedBox(height: 45),
-
             const Text(
               'Please note that Discounts / Membership Benefits will be applied once you have selected your tickets',
               style: TextStyle(
@@ -69,9 +63,7 @@ class _MovieListingState extends State<MovieListing> {
                 color: cinemaFontWhite,
               ),
             ),
-
             const SizedBox(height: 22),
-
             const Text(
               'Select Quantities (Up to 5 in total)',
               style: TextStyle(
@@ -79,9 +71,7 @@ class _MovieListingState extends State<MovieListing> {
                 color: cinemaFontWhite,
               ),
             ),
-
             const SizedBox(height: 45),
-
             const Text(
               'Tickets',
               style: TextStyle(
@@ -89,9 +79,7 @@ class _MovieListingState extends State<MovieListing> {
                 color: cinemaFontWhite,
               ),
             ),
-
             const SizedBox(height: 22),
-
             LayoutBuilder(
               builder: (context, constraints) {
                 if (constraints.maxWidth > 600) {
@@ -115,9 +103,7 @@ class _MovieListingState extends State<MovieListing> {
                           DropdownMenuEntry(value: 5, label: '5'),
                         ],
                       ),
-
                       const SizedBox(width: 15),
-
                       Text(
                         'Adult (${widget.movie.formattedPrice})',
                         style: const TextStyle(
@@ -148,9 +134,7 @@ class _MovieListingState extends State<MovieListing> {
                           DropdownMenuEntry(value: 5, label: '5'),
                         ],
                       ),
-
                       const SizedBox(height: 15),
-
                       Text(
                         'Adult (${widget.movie.formattedPrice})',
                         style: const TextStyle(
@@ -163,9 +147,7 @@ class _MovieListingState extends State<MovieListing> {
                 }
               },
             ),
-
             const SizedBox(height: 30),
-
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: cinemaBrand,
@@ -181,9 +163,7 @@ class _MovieListingState extends State<MovieListing> {
               },
               child: const Text('Add to order'),
             ),
-
             const SizedBox(height: 16),
-
             Text(
               _feedback,
               style: const TextStyle(
