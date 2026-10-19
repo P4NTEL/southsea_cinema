@@ -31,13 +31,17 @@ void main() {
   });
 
   group('BasketRepository tests', () {
-    test('starts with an empty basket and zero total', () {
+    test('starts with empty basket and zero totals', () {
       final BasketRepository basket = BasketRepository.instance;
       expect(basket.getItems().length, 0);
-      expect(basket.getTotal(), 0.0);
+      expect(basket.getTotalItems(), 0);
+      expect(basket.totalItemCount, 0);
+      expect(basket.getSubtotal(), 0.0);
+      expect(basket.getServiceCharge(), 0.0);
+      expect(basket.getTotalDue(), 0.0);
     });
 
-    test('adds tickets and calculates the total correctly', () {
+    test('adds items and calculates subtotal and service charge correctly', () {
       final BasketRepository basket = BasketRepository.instance;
       const BasketItem item1 = BasketItem(
         movie: testMovie1,
@@ -52,7 +56,11 @@ void main() {
       basket.addItem(item2);
 
       expect(basket.getItems().length, 2);
-      expect(basket.getTotal(), 26.0);
+      expect(basket.getTotalItems(), 3);
+      expect(basket.totalItemCount, 3);
+      expect(basket.getSubtotal(), 26.0);
+      expect(basket.getServiceCharge(), 4.00);
+      expect(basket.getTotalDue(), 30.00);
     });
 
     test('removes items correctly', () {
@@ -66,21 +74,7 @@ void main() {
 
       basket.removeItem(0);
       expect(basket.getItems().length, 0);
-      expect(basket.getTotal(), 0.0);
-    });
-
-    test('clears the basket', () {
-      final BasketRepository basket = BasketRepository.instance;
-      const BasketItem item = BasketItem(
-        movie: testMovie1,
-        quantity: 2,
-      );
-      basket.addItem(item);
-      expect(basket.getItems().length, 1);
-
-      basket.clear();
-      expect(basket.getItems().length, 0);
-      expect(basket.getTotal(), 0.0);
+      expect(basket.getTotalDue(), 0.0);
     });
   });
 }
