@@ -154,7 +154,7 @@ class _MovieListingState extends State<MovieListing> {
                 setState(() {
                   BasketRepository.instance.addItem(
                     BasketItem(movie: widget.movie, quantity: _ticketQuantity),
-                );
+                  );
                   _feedback = 'Added $_ticketQuantity ticket(s) to your order';
                 });
               },

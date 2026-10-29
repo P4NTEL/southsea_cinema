@@ -30,7 +30,8 @@ class _BasketScreenState extends State<BasketScreen> {
   }
 
   Widget _buildHeaderRow() {
-    const TextStyle style = TextStyle(fontWeight: FontWeight.bold, fontSize: 18);
+    const TextStyle style =
+        TextStyle(fontWeight: FontWeight.bold, fontSize: 18);
 
     return const Padding(
       padding: EdgeInsets.symmetric(vertical: 8.0),

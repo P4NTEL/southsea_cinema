@@ -22,19 +22,21 @@ void main() {
       expect(movie.datetime, '18:00 - 20:05 22 Oct 2026');
       expect(movie.adultprice, 7.5);
       expect(movie.image, 'assets/images/httyd.jpg');
-      expect(movie.description, 'A young viking changes his opinion about dragons');
+      expect(movie.description,
+          'A young viking changes his opinion about dragons');
     });
 
     test('formattedPrice returns price with pound sign and two decimals', () {
       const movie = Movie(
-        id: 'joker',
-        title: 'Joker',
-        room: 'Room 2',
-        agerate: 'R',
-        datetime: '19:00 - 21:05 24 Oct 2026',
-        adultprice: 7.50,
-        image: 'assets/images/joker.jpg',
-        description:'Joker is a gritty psychological thriller exploring the tragic, chaotic descent of failed comedian Arthur Fleck.');
+          id: 'joker',
+          title: 'Joker',
+          room: 'Room 2',
+          agerate: 'R',
+          datetime: '19:00 - 21:05 24 Oct 2026',
+          adultprice: 7.50,
+          image: 'assets/images/joker.jpg',
+          description:
+              'Joker is a gritty psychological thriller exploring the tragic, chaotic descent of failed comedian Arthur Fleck.');
 
       expect(movie.formattedPrice, '£7.50');
     });

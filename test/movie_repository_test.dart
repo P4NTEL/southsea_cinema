@@ -82,7 +82,8 @@ void main() {
       expect(movies, isEmpty);
     });
 
-    test('loadMoviesFromAsset reads every film from the bundled JSON', () async {
+    test('loadMoviesFromAsset reads every film from the bundled JSON',
+        () async {
       final MovieRepository repository = MovieRepository();
       final List<Movie> movies = await repository.loadMoviesFromAsset();
 
