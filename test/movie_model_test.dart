@@ -38,5 +38,52 @@ void main() {
 
       expect(movie.formattedPrice, '£7.50');
     });
+
+    test('fromJson creates a Movie and toJson returns the same map', () {
+      final Map<String, dynamic> json = <String, dynamic>{
+        'id': 'joker',
+        'title': 'Joker',
+        'room': 'Room 2',
+        'agerate': 'R',
+        'datetime': '19:00 - 21:05 24 Oct 2026',
+        'adultprice': 7.50,
+        'image': 'assets/images/joker.jpg',
+        'description':
+            'Joker is a gritty psychological thriller exploring the tragic, chaotic descent of failed comedian Arthur Fleck.',
+      };
+
+      final Movie movie = Movie.fromJson(json);
+
+      expect(movie.id, 'joker');
+      expect(movie.title, 'Joker');
+      expect(movie.room, 'Room 2');
+      expect(movie.agerate, 'R');
+      expect(movie.datetime, '19:00 - 21:05 24 Oct 2026');
+      expect(movie.adultprice, 7.50);
+      expect(movie.image, 'assets/images/joker.jpg');
+      expect(
+        movie.description,
+        'Joker is a gritty psychological thriller exploring the tragic, chaotic descent of failed comedian Arthur Fleck.',
+      );
+      expect(movie.toJson(), json);
+    });
+
+    test('fromJson converts a whole-number price to a double', () {
+      final Map<String, dynamic> json = <String, dynamic>{
+        'id': 'test-movie',
+        'title': 'Test Movie',
+        'room': 'Room 3',
+        'agerate': 'U',
+        'datetime': '12:00 - 13:30 25 Oct 2026',
+        'adultprice': 8,
+        'image': 'assets/images/test.jpg',
+        'description': 'A test movie.',
+      };
+
+      final Movie movie = Movie.fromJson(json);
+
+      expect(movie.adultprice, 8.0);
+      expect(movie.adultprice, isA<double>());
+    });
   });
 }
