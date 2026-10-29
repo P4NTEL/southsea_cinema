@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:southsea_cinema/main.dart';
 import 'package:southsea_cinema/screens/menu_screen.dart';
 import 'package:southsea_cinema/views/movie_listing.dart';
+import 'package:flutter/services.dart';
 
 // The listing page is not scrollable, so the default 800x600 test window is
 // too short for it. A taller window stops the layout from overflowing.
@@ -13,6 +14,9 @@ void useTallWindow(WidgetTester tester) {
 }
 
 void main() {
+  setUp(() {
+    rootBundle.clear();
+  });
   group('App smoke tests', () {
     testWidgets('App displays MenuScreen as home', (WidgetTester tester) async {
       await tester.pumpWidget(const SouthseaCinemaApp());

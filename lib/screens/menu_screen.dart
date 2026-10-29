@@ -6,13 +6,63 @@ import 'package:southsea_cinema/widgets/movie_card.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
 import 'package:southsea_cinema/widgets/settings_button.dart';
 
-class MenuScreen extends StatelessWidget {
+class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
 
   @override
+  State<MenuScreen> createState() {
+    return _MenuScreenState();
+  }
+}
+
+class _MenuScreenState extends State<MenuScreen> {
+  List<Movie> _movies = [];
+  bool _loading = true;
+  String _errorMessage = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadMovies();
+  }
+
+  Future<void> _loadMovies() async {
+    try {
+      final MovieRepository repository = MovieRepository();
+      final List<Movie> movies = await repository.loadMoviesFromAsset();
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _movies = movies;
+        _loading = false;
+      });
+    } catch (error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _errorMessage = 'Could not load the films: $error';
+        _loading = false;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final MovieRepository movieRepository = MovieRepository();
-    final List<Movie> movies = movieRepository.getMovies();
+    final Widget body;
+    if (_loading) {
+      body = const Center(child: CircularProgressIndicator());
+    } else if (_errorMessage.isNotEmpty) {
+      body = Center(child: Text(_errorMessage));
+    } else {
+      body = ListView.builder(
+        itemCount: _movies.length,
+        itemBuilder: (BuildContext context, int index) {
+          return MovieCard(movie: _movies[index]);
+        },
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -24,13 +74,7 @@ class MenuScreen extends StatelessWidget {
         actions: const [SettingsButton()],
       ),
       drawer: const NavDrawer(),
-      body: ListView.builder(
-        itemCount: movies.length,
-        itemBuilder: (context, index) {
-          final movie = movies[index];
-          return MovieCard(movie: movie);
-        },
-      ),
+      body: body,
     );
   }
 }

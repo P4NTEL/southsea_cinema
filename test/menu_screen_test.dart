@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:southsea_cinema/screens/menu_screen.dart';
 import 'package:southsea_cinema/screens/settings_screen.dart';
 
 void main() {
+  setUp(() {
+    rootBundle.clear();
+  });
+
   testWidgets('MenuScreen shows the movies and the settings button', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(const MaterialApp(home: MenuScreen()));
+    await tester.pumpAndSettle();
 
     expect(find.text('How To Train Your Dragon'), findsOneWidget);
     expect(find.text('Joker'), findsOneWidget);
@@ -30,6 +36,7 @@ void main() {
         },
       ),
     );
+    await tester.pumpAndSettle();
 
     await tester.tap(find.byIcon(Icons.person_outline));
     await tester.pumpAndSettle();
