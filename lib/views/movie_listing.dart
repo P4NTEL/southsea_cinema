@@ -26,7 +26,7 @@ class _MovieListingState extends State<MovieListing> {
         title: const Text(appTitle),
       ),
       drawer: const NavDrawer(),
-      body: Container(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

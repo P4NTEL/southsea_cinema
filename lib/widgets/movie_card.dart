@@ -90,11 +90,13 @@ class MovieCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  movie.datetime,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: cinemaFontWhite,
+                Expanded(
+                  child: Text(
+                    movie.datetime,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: cinemaFontWhite,
+                    ),
                   ),
                 ),
                 PrimaryButton(
