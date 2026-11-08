@@ -183,8 +183,7 @@ class _BasketScreenState extends State<BasketScreen> {
   }
 
   Widget _buildHeaderRow() {
-    const TextStyle style =
-        TextStyle(fontWeight: FontWeight.bold, fontSize: 16);
+    const TextStyle style = TextStyle(fontWeight: FontWeight.bold, fontSize: 16);
 
     return const Padding(
       padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -246,6 +245,7 @@ class _BasketScreenState extends State<BasketScreen> {
             width: 44,
             height: 44,
             child: ElevatedButton(
+              key: Key('delete_${item.movie.id}'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: cinemaBrand,
                 foregroundColor: cinemaFontWhite,

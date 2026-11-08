@@ -19,6 +19,28 @@ const Movie testMovie = Movie(
   description: 'A test movie.',
 );
 
+const Movie testMovie2 = Movie(
+  id: 'test-movie-2',
+  title: 'Test Movie Two',
+  room: 'Room 2',
+  agerate: '15',
+  datetime: '19:00 - 21:00 23 Oct 2026',
+  adultprice: 6.0,
+  image: 'assets/images/test2.jpg',
+  description: 'Another test movie.',
+);
+
+const Movie testMovie3 = Movie(
+  id: 'test-movie-3',
+  title: 'Test Movie Three',
+  room: 'Room 3',
+  agerate: 'U',
+  datetime: '20:00 - 22:00 24 Oct 2026',
+  adultprice: 8.0,
+  image: 'assets/images/test3.jpg',
+  description: 'A third test movie.',
+);
+
 // The basket page is taller than the default 800x600 test window, so a taller
 // window lets the buttons be tapped without scrolling.
 void useTallWindow(WidgetTester tester) {
@@ -186,5 +208,38 @@ void main() {
     final double newestY = tester.getTopLeft(find.text('Booking #1002')).dy;
     final double oldestY = tester.getTopLeft(find.text('Booking #1001')).dy;
     expect(newestY, lessThan(oldestY));
+  });
+
+  testWidgets('Deleting the middle film leaves the other two', (
+    WidgetTester tester,
+  ) async {
+    useTallWindow(tester);
+    BasketRepository.instance.addItem(
+      const BasketItem(movie: testMovie, quantity: 1),
+    );
+    BasketRepository.instance.addItem(
+      const BasketItem(movie: testMovie2, quantity: 1),
+    );
+    BasketRepository.instance.addItem(
+      const BasketItem(movie: testMovie3, quantity: 1),
+    );
+
+    await tester.runAsync(() async {
+      await tester.pumpWidget(const MaterialApp(home: BasketScreen()));
+      await tester.pumpAndSettle();
+    });
+    await tester.pump();
+
+    expect(find.textContaining('Test Movie One'), findsOneWidget);
+    expect(find.textContaining('Test Movie Two'), findsOneWidget);
+    expect(find.textContaining('Test Movie Three'), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('delete_test-movie-2')));
+    await tester.pump();
+
+    expect(find.textContaining('Test Movie One'), findsOneWidget);
+    expect(find.textContaining('Test Movie Two'), findsNothing);
+    expect(find.textContaining('Test Movie Three'), findsOneWidget);
+    expect(BasketRepository.instance.getItems().length, 2);
   });
 }
