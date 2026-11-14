@@ -1,163 +1,146 @@
-# Southsea Cinema - Flutter Coursework
+# Southsea Cinema
 
-This repository contains the coursework starter project for students enrolled in the **Programming Applications and Programming Languages (M30235)** and **User Experience Design and Implementation (M32605)** modules at the University of Portsmouth.
+A Flutter app for browsing films at Southsea Cinema, choosing tickets and
+keeping a record of your bookings. It is built for the University of
+Portsmouth Flutter coursework and runs on an Android emulator.
 
-## Overview
+![The film list in dark mode](images/menu_dark.png)
 
-Your task is to recreate a mobile-friendly version of the Southsea Cinema website using Flutter. You must begin by forking this starter repository, then build your own version of the app step by step as you work through the weekly worksheets.
+## Features
 
-Reference website: [Southsea Cinema](https://southseacinema.savoysystems.co.uk/SouthseaCinema.dll/)
+- Browse the films, loaded from a JSON file in the app assets.
+- Open a film to see its room, date and time, then choose 1 to 5 tickets and
+  add them to your order.
+- Review your order on the basket screen. Each line shows the number of
+  tickets, the film, the date, the room and the price, and can be deleted.
+- See a service charge of £4.00 and the total due. The service charge is not
+  added when the basket is empty.
+- Buy the tickets to save a booking. The basket is cleared only after the
+  booking has been saved.
+- See your past bookings, newest first. They are kept in a local SQLite
+  database, so they are still there after you close and reopen the app.
+- Save your address, email address, patron number and newsletter choice in
+  Settings.
+- Switch between dark mode and light mode in Settings. The choice is saved and
+  used the next time the app starts.
+- Move between Home, My Basket and My Settings with the menu drawer.
 
-The starter app is deliberately minimal. It contains only a basic theme, an empty home page, a small drawer, and a default widget test. You are expected to add screens, widgets, data models, tests, persistence, and cloud services during the coursework.
+## Screenshots
 
-## Getting Started
+![The film page](images/film_page.png)
+
+![The basket with past bookings](images/basket.png)
+
+![The settings screen](images/settings.png)
+
+![The app in light mode](images/menu_light.png)
+
+## Supported platform
+
+The app has been run and tested on the Android emulator. It has not been
+tested on a browser or on a desktop.
+
+## Getting started
 
 ### Prerequisites
 
 You need:
 
-- A GitHub account
-- A way to edit and run Flutter projects
-- Git installed and connected to your GitHub account
+- [Flutter](https://docs.flutter.dev/get-started/install)
+- Android Studio with an Android emulator
+- Git
 
-Follow the [development environment instructions in Worksheet 1](https://manighahrmani.github.io/sandwich_shop/worksheet-1.html#set-up-your-development-environment). You can use your own device or access the university machines remotely.
+On Windows, turn on Developer Mode in the Windows settings before the first
+build. The plugins used by the app need it.
 
-### Fork the Repository
-
-Open this repository on GitHub and click **Fork**, as shown below:
-
-[https://github.com/manighahrmani/southsea_cinema/fork](https://github.com/manighahrmani/southsea_cinema/fork)
-
-![Clicking the Fork button on GitHub](images/step1_fork_button.png)
-
-On the "Create a new fork" page, leave the default options as they are (do not change the repository name) and click **Create fork**:
-
-![Creating a new fork on GitHub](images/step1_create_fork.png)
-
-Your fork should be called `southsea_cinema` and should have a URL like this:
-
-```text
-https://github.com/YOUR-USERNAME/southsea_cinema
-```
-
-### Clone Your Forked Repository
-
-On your forked repository page, click the green **Code** button and copy the HTTPS URL, as shown below:
-
-![Copying the clone URL from GitHub](images/step2_clone_repository.png)
-
-If you are using VS Code, open the Source Control panel and click **Clone Repository** (or open the Command Palette with `Ctrl+Shift+P` / `Cmd+Shift+P` and choose "Git: Clone"), then paste the URL you copied:
-
-![Cloning your fork in VS Code](images/step2_open_in_vscode.png)
-
-Alternatively, if you are using a terminal, run:
-
-```bash
-git clone https://github.com/YOUR-USERNAME/southsea_cinema.git
-cd southsea_cinema
-```
-
-Replace `YOUR-USERNAME` with your GitHub username.
-
-### Install Dependencies
-
-When you open the project, VS Code may show a popup asking if you want to fetch missing packages. If you see it, click **Run 'pub get'**, as shown below:
-
-![VS Code prompting to run pub get](images/step3_flutter_pub_get_better.png)
-
-If you do not see this popup, open a terminal and run the command manually:
+### Install dependencies
 
 ```bash
 flutter pub get
 ```
 
-This downloads the Flutter packages needed by the starter app.
+### Run the app
 
-![Running flutter pub get in the terminal](images/step3_flutter_pub_get.png)
-
-### Run the Application
-
-This coursework targets Flutter Web. Use Chrome or Edge.
+Start the emulator, then run the app on it:
 
 ```bash
-flutter run -d chrome
+flutter emulators --launch flutter_emulator
+flutter run -d emulator-5554
 ```
 
-or:
+If your emulator has a different name, list the available ones with
+`flutter emulators`.
+
+## Running the tests
+
+Run all the tests:
 
 ```bash
-flutter run -d edge
+flutter test
 ```
 
-The app should open in your browser and show the Southsea Cinema starter home page, as shown below:
-
-![Starter app running in Chrome](images/step4_run_app.png)
-
-### Use Mobile View
-
-The coursework should be designed mobile-first.
-
-To view it in mobile view in Chrome or Edge, open developer tools (right-click the page and choose **Inspect**, or press F12), then click the **Toggle device toolbar** button:
-
-![Toggle device toolbar button in Chrome DevTools](images/step5_open_devtools.png)
-
-Finally, choose a phone-sized device preset from the dropdown menu:
-
-![Selecting a phone-sized device preset](images/step5_mobile_view.png)
-
-## Marking Criteria
-
-This repository is the starting point for your Southsea Cinema coursework, which is Item 1 of your module and worth 50% of the overall module mark. Item 1 is assessed as a portfolio of five live in-person demos during your timetabled practical session. You build the app progressively by completing the exercises at the end of the weekly worksheets.
-
-Every two worksheets prepare you for one demo (for example, Worksheets 1 and 2 prepare you for Demo 1). Only your best four demo marks count towards Item 1, with each counted demo worth 25% of Item 1 (12.5% of the overall module mark). Each demo is marked on functionality (9%), code quality (8%), and your understanding through two questions about your own code (8%).
-
-Assessment takes place across five two-week demo windows (Weeks 1 and 2, Weeks 3 and 4, Weeks 5 and 6, Weeks 7 and 8, and Weeks 9 and 10). Three rules apply:
-
-- You can perform at most one demo in any demo window.
-- Demos must be completed in order. You cannot skip ahead to a later demo if you have missed an earlier one, because each stage builds on the previous codebase.
-- Missing one demo window carries no mark penalty because only your best four demo marks count. Missing two or more windows reduces the number of demos you can complete.
-
-For the full mark breakdown, the missed-demo rules, and how Extenuating Circumstances affect Item 1, read the [Assessment Guide](https://portdotacdotuk-my.sharepoint.com/:w:/g/personal/mani_ghahremani_port_ac_uk/IQC9nZoNwb2jT40MnFQPZWVvAVdTK2PGBmZ8jPff30RRyPc). The full demo dates and requirements are listed on the [Flutter Course homepage](https://manighahrmani.github.io/sandwich_shop/).
-
-## Submission
-
-You will submit the link to your public forked repository on Moodle before the first demo. You are not submitting a zip file or a copy of the source code.
-
-Make sure your repository is public. Test this by opening your repository link in a private/incognito browser window.
-
-## Demonstration
-
-During each demo, you must be able to run your app and answer questions about your code.
-
-Before attending a demo, check that the app runs from a clean clone:
+Check the code style and look for problems:
 
 ```bash
-flutter pub get
-flutter run -d chrome
+dart format lib test
+dart analyze
 ```
 
-## Project Structure
+The database tests use an in-memory SQLite database, so they run without an
+emulator. The widget tests use an in-memory version of shared preferences.
 
-The starter repository is intentionally small:
+## How the app works
+
+- **Films** come from `assets/data/movies.json`. The menu screen loads them
+  when it opens and shows a loading spinner or an error message.
+- **The basket** is held by `BasketRepository`, which has one shared instance
+  for the whole app. It works out the subtotal, the service charge and the
+  total.
+- **Bookings** are saved by `CinemaDatabase` in a SQLite database file.
+  The first time the database is created it is filled with three sample
+  bookings.
+- **Settings** are saved with `SharedPreferencesAsync`: the address, email,
+  patron number, newsletter choice and dark mode choice.
+- **The theme** is set in `main.dart`. The app reads the saved dark mode
+  choice when it starts. Saving Settings changes the theme straight away.
+
+## Project structure
 
 ```text
 southsea_cinema/
+├── assets/
+│   └── data/movies.json            # The films
 ├── lib/
-│   ├── constants.dart          # Shared colours, text styles, and app title
-│   ├── main.dart               # Main app and route setup
+│   ├── constants.dart              # Colours, text style and app title
+│   ├── main.dart                   # App, themes and routes
+│   ├── database/
+│   │   └── cinema_db.dart          # SQLite database for bookings
+│   ├── models/
+│   │   ├── basket_item.dart        # A film and a number of tickets
+│   │   ├── booking.dart            # A saved booking
+│   │   ├── movie.dart              # A film
+│   │   └── user_settings.dart      # The saved settings
+│   ├── repositories/
+│   │   ├── basket_repository.dart  # The order and its totals
+│   │   └── movie_repository.dart   # Loads and filters the films
+│   ├── screens/
+│   │   ├── basket_screen.dart      # Order, checkout and past bookings
+│   │   ├── menu_screen.dart        # The film list
+│   │   └── settings_screen.dart    # Settings form and dark mode
 │   ├── views/
-│   │   ├── home_view.dart      # Starter home page
-│   │   └── movie_listing.dart  # Empty movie listing page
+│   │   └── movie_listing.dart      # One film and its ticket choice
 │   └── widgets/
-│       └── nav_drawer.dart     # Minimal starter drawer
-├── test/
-│   └── widget_test.dart        # Basic widget test
-├── pubspec.yaml                # Project dependencies
-└── README.md                   # This file
+│       ├── movie_card.dart         # A film in the list
+│       ├── nav_drawer.dart         # The menu drawer
+│       ├── primary_button.dart     # The blue button
+│       └── settings_button.dart    # The person icon in the app bar
+├── test/                           # Mirrors the lib folder
+├── pubspec.yaml                    # Dependencies and assets
+└── README.md                       # This file
 ```
 
-You will add more files and folders as the coursework develops.
+## Packages
 
-## Help with Coursework
-
-If you have questions or encounter issues while working on this coursework, use the [Discord guide](https://portdotacdotuk-my.sharepoint.com/:p:/g/personal/mani_ghahremani_port_ac_uk/IQCMJP6IiR_bQoYUMdXJSRDYAWnajEALZYEXFZyrJkHS1QU) to find the dedicated Discord channel and ask for help. Before posting a new question, check the existing posts to see if your question has already been answered. You can also attend your timetabled practical sessions to get face-to-face support from teaching staff.
+- `shared_preferences` saves the settings.
+- `sqflite` and `path` store the bookings in SQLite.
+- `sqflite_common_ffi` runs the database tests without an emulator.
