@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
+import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
 import 'package:southsea_cinema/main.dart';
 import 'package:southsea_cinema/screens/menu_screen.dart';
+import 'package:southsea_cinema/screens/settings_screen.dart';
 import 'package:southsea_cinema/views/movie_listing.dart';
-import 'package:flutter/services.dart';
 
 // The listing page is not scrollable, so the default 800x600 test window is
 // too short for it. A taller window stops the layout from overflowing.
@@ -16,7 +19,11 @@ void useTallWindow(WidgetTester tester) {
 void main() {
   setUp(() {
     rootBundle.clear();
+    SharedPreferencesAsyncPlatform.instance =
+        InMemorySharedPreferencesAsync.empty();
+    themeModeNotifier.value = ThemeMode.dark;
   });
+
   group('App smoke tests', () {
     testWidgets('App displays MenuScreen as home', (WidgetTester tester) async {
       await tester.pumpWidget(const SouthseaCinemaApp());
@@ -85,6 +92,53 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Added 1 ticket(s) to your order'), findsOneWidget);
+    });
+
+    testWidgets('App uses dark mode by default', (WidgetTester tester) async {
+      await tester.pumpWidget(const SouthseaCinemaApp());
+      await tester.pumpAndSettle();
+
+      final MaterialApp app = tester.widget<MaterialApp>(
+        find.byType(MaterialApp),
+      );
+      expect(app.themeMode, ThemeMode.dark);
+    });
+
+    testWidgets('App starts in light mode when light mode was saved', (
+      WidgetTester tester,
+    ) async {
+      SharedPreferencesAsyncPlatform.instance =
+          InMemorySharedPreferencesAsync.withData(<String, Object>{
+        prefDarkMode: false,
+      });
+
+      await tester.pumpWidget(const SouthseaCinemaApp());
+      await tester.pumpAndSettle();
+
+      final MaterialApp app = tester.widget<MaterialApp>(
+        find.byType(MaterialApp),
+      );
+      expect(app.themeMode, ThemeMode.light);
+    });
+
+    testWidgets('Saving dark mode off in Settings changes the app theme', (
+      WidgetTester tester,
+    ) async {
+      useTallWindow(tester);
+      await tester.pumpWidget(const SouthseaCinemaApp());
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byIcon(Icons.person_outline));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('dark_mode_switch')));
+      await tester.pump();
+      await tester.tap(find.text('SAVE SETTINGS'));
+      await tester.pumpAndSettle();
+
+      final MaterialApp app = tester.widget<MaterialApp>(
+        find.byType(MaterialApp),
+      );
+      expect(app.themeMode, ThemeMode.light);
     });
   });
 }

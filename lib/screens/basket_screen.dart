@@ -103,7 +103,6 @@ class _BasketScreenState extends State<BasketScreen> {
 
   Widget _buildBookingCard(Booking booking) {
     return Card(
-      color: cinemaSurface,
       margin: const EdgeInsets.symmetric(vertical: 8.0),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -120,17 +119,11 @@ class _BasketScreenState extends State<BasketScreen> {
                     color: cinemaBrand,
                   ),
                 ),
-                Text(
-                  '£${booking.total.toStringAsFixed(2)}',
-                  style: const TextStyle(color: cinemaFontWhite),
-                ),
+                Text('£${booking.total.toStringAsFixed(2)}'),
               ],
             ),
             const SizedBox(height: 4),
-            Text(
-              booking.summary,
-              style: const TextStyle(color: cinemaFontWhite),
-            ),
+            Text(booking.summary),
             const SizedBox(height: 4),
             Text(
               booking.date,
@@ -183,7 +176,8 @@ class _BasketScreenState extends State<BasketScreen> {
   }
 
   Widget _buildHeaderRow() {
-    const TextStyle style = TextStyle(fontWeight: FontWeight.bold, fontSize: 16);
+    const TextStyle style =
+        TextStyle(fontWeight: FontWeight.bold, fontSize: 16);
 
     return const Padding(
       padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -272,7 +266,7 @@ class _BasketScreenState extends State<BasketScreen> {
     if (emphasise) {
       style = const TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
     } else {
-      style = const TextStyle(color: cinemaFontWhite, fontSize: 16);
+      style = const TextStyle(fontSize: 16);
     }
 
     return Padding(

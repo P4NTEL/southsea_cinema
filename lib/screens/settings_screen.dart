@@ -9,6 +9,12 @@ const String prefAddress = 'user_address';
 const String prefEmail = 'user_email';
 const String prefPhoneNumber = 'user_phone_number';
 const String prefNewsletter = 'user_newsletter';
+const String prefDarkMode = 'user_dark_mode';
+
+// main.dart listens to this, so changing it re-themes the whole app.
+final ValueNotifier<ThemeMode> themeModeNotifier = ValueNotifier<ThemeMode>(
+  ThemeMode.dark,
+);
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -24,6 +30,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   late TextEditingController _emailController;
   late TextEditingController _phoneNumberController;
   bool _receiveNewsletter = false;
+  bool _darkMode = true;
   String _confirmationMessage = '';
 
   @override
@@ -49,6 +56,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final String? savedEmail = await prefs.getString(prefEmail);
     final String? savedPhoneNumber = await prefs.getString(prefPhoneNumber);
     final bool? savedNewsletter = await prefs.getBool(prefNewsletter);
+    final bool? savedDarkMode = await prefs.getBool(prefDarkMode);
 
     String address = '';
     if (savedAddress != null) {
@@ -70,10 +78,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
       newsletter = savedNewsletter;
     }
 
+    bool darkMode = true;
+    if (savedDarkMode != null) {
+      darkMode = savedDarkMode;
+    }
+
     if (!mounted) {
       return;
     }
     setState(() {
+      _darkMode = darkMode;
       _addressController.text = address;
       _emailController.text = email;
       _phoneNumberController.text = phoneNumber;
@@ -91,6 +105,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     await prefs.setString(prefEmail, email);
     await prefs.setString(prefPhoneNumber, phoneNumber);
     await prefs.setBool(prefNewsletter, _receiveNewsletter);
+    await prefs.setBool(prefDarkMode, _darkMode);
+
+    if (_darkMode) {
+      themeModeNotifier.value = ThemeMode.dark;
+    } else {
+      themeModeNotifier.value = ThemeMode.light;
+    }
 
     final UserSettings settings = UserSettings(
       address: address,
@@ -166,10 +187,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: Text('Receive news by email'),
                 ),
                 Switch(
+                  key: const Key('newsletter_switch'),
                   value: _receiveNewsletter,
                   onChanged: (bool value) {
                     setState(() {
                       _receiveNewsletter = value;
+                    });
+                  },
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                const Expanded(
+                  child: Text('Dark mode'),
+                ),
+                Switch(
+                  key: const Key('dark_mode_switch'),
+                  value: _darkMode,
+                  onChanged: (bool value) {
+                    setState(() {
+                      _darkMode = value;
                     });
                   },
                 ),
@@ -180,8 +218,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: cinemaSurface,
-                    foregroundColor: cinemaFontWhite,
+                    backgroundColor: Theme.of(context).colorScheme.surface,
+                    foregroundColor: Theme.of(context).colorScheme.onSurface,
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.zero,
                     ),

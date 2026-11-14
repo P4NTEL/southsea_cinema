@@ -15,6 +15,7 @@ void useTallWindow(WidgetTester tester) {
 
 void main() {
   setUp(() {
+    themeModeNotifier.value = ThemeMode.dark;
     SharedPreferencesAsyncPlatform.instance =
         InMemorySharedPreferencesAsync.empty();
   });
@@ -37,7 +38,8 @@ void main() {
     expect(find.text('Portsmouth Guildhall, PO1 2AJ'), findsOneWidget);
     expect(find.text('abdul.kadir@portsmouthcc.gov.uk'), findsOneWidget);
     expect(find.text('1234'), findsOneWidget);
-    final Switch switchWidget = tester.widget<Switch>(find.byType(Switch));
+    final Switch switchWidget =
+        tester.widget<Switch>(find.byKey(const Key('newsletter_switch')));
     expect(switchWidget.value, isTrue);
   });
 
@@ -58,7 +60,7 @@ void main() {
       'gerald.vernon-jackson@portsmouthcc.gov.uk',
     );
     await tester.enterText(phoneField, '5678');
-    await tester.tap(find.byType(Switch));
+    await tester.tap(find.byKey(const Key('newsletter_switch')));
     await tester.pump();
 
     await tester.tap(find.text('SAVE SETTINGS'));
@@ -90,7 +92,8 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('5678'), findsOneWidget);
-    final Switch reopenedSwitch = tester.widget<Switch>(find.byType(Switch));
+    final Switch reopenedSwitch =
+        tester.widget<Switch>(find.byKey(const Key('newsletter_switch')));
     expect(reopenedSwitch.value, isTrue);
   });
 
@@ -101,8 +104,57 @@ void main() {
     await tester.pumpWidget(const MaterialApp(home: SettingsScreen()));
     await tester.pumpAndSettle();
 
-    final Switch switchWidget = tester.widget<Switch>(find.byType(Switch));
+    final Switch switchWidget =
+        tester.widget<Switch>(find.byKey(const Key('newsletter_switch')));
     expect(switchWidget.value, isFalse);
     expect(find.text('Settings saved'), findsNothing);
+  });
+
+  testWidgets('Dark mode switch starts on when nothing has been saved', (
+    WidgetTester tester,
+  ) async {
+    useTallWindow(tester);
+    await tester.pumpWidget(const MaterialApp(home: SettingsScreen()));
+    await tester.pumpAndSettle();
+
+    final Switch darkSwitch = tester.widget<Switch>(
+      find.byKey(const Key('dark_mode_switch')),
+    );
+    expect(darkSwitch.value, isTrue);
+  });
+
+  testWidgets('Turning dark mode off and saving switches to light mode', (
+    WidgetTester tester,
+  ) async {
+    useTallWindow(tester);
+    await tester.pumpWidget(const MaterialApp(home: SettingsScreen()));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('dark_mode_switch')));
+    await tester.pump();
+    await tester.tap(find.text('SAVE SETTINGS'));
+    await tester.pumpAndSettle();
+
+    expect(themeModeNotifier.value, ThemeMode.light);
+    final SharedPreferencesAsync prefs = SharedPreferencesAsync();
+    expect(await prefs.getBool(prefDarkMode), isFalse);
+  });
+
+  testWidgets('Dark mode switch is off when light mode was saved', (
+    WidgetTester tester,
+  ) async {
+    useTallWindow(tester);
+    SharedPreferencesAsyncPlatform.instance =
+        InMemorySharedPreferencesAsync.withData(<String, Object>{
+      prefDarkMode: false,
+    });
+
+    await tester.pumpWidget(const MaterialApp(home: SettingsScreen()));
+    await tester.pumpAndSettle();
+
+    final Switch darkSwitch = tester.widget<Switch>(
+      find.byKey(const Key('dark_mode_switch')),
+    );
+    expect(darkSwitch.value, isFalse);
   });
 }

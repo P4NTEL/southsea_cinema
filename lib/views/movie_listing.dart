@@ -36,7 +36,6 @@ class _MovieListingState extends State<MovieListing> {
               style: const TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.bold,
-                color: cinemaFontWhite,
               ),
             ),
             const SizedBox(height: 45),
@@ -44,7 +43,6 @@ class _MovieListingState extends State<MovieListing> {
               widget.movie.room,
               style: const TextStyle(
                 fontSize: 18,
-                color: cinemaFontWhite,
               ),
             ),
             const SizedBox(height: 22),
@@ -52,7 +50,6 @@ class _MovieListingState extends State<MovieListing> {
               widget.movie.datetime,
               style: const TextStyle(
                 fontSize: 18,
-                color: cinemaFontWhite,
               ),
             ),
             const SizedBox(height: 45),
@@ -60,7 +57,6 @@ class _MovieListingState extends State<MovieListing> {
               'Please note that Discounts / Membership Benefits will be applied once you have selected your tickets',
               style: TextStyle(
                 fontSize: 18,
-                color: cinemaFontWhite,
               ),
             ),
             const SizedBox(height: 22),
@@ -68,7 +64,6 @@ class _MovieListingState extends State<MovieListing> {
               'Select Quantities (Up to 5 in total)',
               style: TextStyle(
                 fontSize: 18,
-                color: cinemaFontWhite,
               ),
             ),
             const SizedBox(height: 45),
@@ -76,7 +71,6 @@ class _MovieListingState extends State<MovieListing> {
               'Tickets',
               style: TextStyle(
                 fontSize: 24,
-                color: cinemaFontWhite,
               ),
             ),
             const SizedBox(height: 22),
@@ -108,7 +102,6 @@ class _MovieListingState extends State<MovieListing> {
                         'Adult (${widget.movie.formattedPrice})',
                         style: const TextStyle(
                           fontSize: 18,
-                          color: cinemaFontWhite,
                         ),
                       ),
                     ],
@@ -139,7 +132,6 @@ class _MovieListingState extends State<MovieListing> {
                         'Adult (${widget.movie.formattedPrice})',
                         style: const TextStyle(
                           fontSize: 18,
-                          color: cinemaFontWhite,
                         ),
                       ),
                     ],
@@ -164,7 +156,6 @@ class _MovieListingState extends State<MovieListing> {
               _feedback,
               style: const TextStyle(
                 fontSize: 18,
-                color: cinemaFontWhite,
               ),
             ),
           ],

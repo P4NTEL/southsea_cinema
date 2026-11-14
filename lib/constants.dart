@@ -10,6 +10,8 @@ const Color cinemaBackground = Color(0xFF1B1E28);
 const Color cinemaFontWhite = Color(0xFFFFFFFF);
 const Color cinemaFontMuted = Color(0xFF8A90A0);
 const Color cinemaSurface = Color(0xFF242936);
+const Color cinemaBackgroundLight = Color(0xFFF1F5F9);
+const Color cinemaSurfaceLight = Color(0xFFFFFFFF);
 
 const TextStyle cinemaHeaderStyle = TextStyle(
   color: cinemaFontWhite,
