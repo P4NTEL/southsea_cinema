@@ -229,4 +229,28 @@ void main() {
     );
     expect((await upgraded.query('booking_items')).length, 1);
   });
+
+  test('The database opens its own file and adds the sample bookings',
+      () async {
+    await CinemaDatabase.instance.close();
+    final Directory folder = Directory.systemTemp.createTempSync('cinema_open');
+    addTearDown(() async {
+      await CinemaDatabase.instance.close();
+      folder.deleteSync(recursive: true);
+    });
+    await databaseFactoryFfiNoIsolate.setDatabasesPath(folder.path);
+    databaseFactory = databaseFactoryFfiNoIsolate;
+
+    final List<Booking> bookings =
+        await CinemaDatabase.instance.getAllBookings();
+
+    expect(bookings.length, 3);
+    expect(bookings[0].bookingNumber, 1003);
+    expect(bookings[1].bookingNumber, 1002);
+    expect(bookings[2].bookingNumber, 1001);
+    expect(await CinemaDatabase.instance.getNextBookingNumber(), 1004);
+
+    final int firstId = bookings[0].id ?? 0;
+    expect(await CinemaDatabase.instance.getBookingItems(firstId), isEmpty);
+  });
 }

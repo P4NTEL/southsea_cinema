@@ -157,4 +157,40 @@ void main() {
     );
     expect(darkSwitch.value, isFalse);
   });
+
+  testWidgets('CANCEL closes the settings screen', (WidgetTester tester) async {
+    useTallWindow(tester);
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Builder(
+          builder: (BuildContext context) {
+            return Scaffold(
+              body: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) {
+                        return const SettingsScreen();
+                      },
+                    ),
+                  );
+                },
+                child: const Text('Open settings'),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+    await tester.tap(find.text('Open settings'));
+    await tester.pumpAndSettle();
+    expect(find.byType(SettingsScreen), findsOneWidget);
+
+    await tester.tap(find.text('CANCEL'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(SettingsScreen), findsNothing);
+    expect(find.text('Open settings'), findsOneWidget);
+  });
 }

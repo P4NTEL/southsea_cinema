@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:southsea_cinema/screens/menu_screen.dart';
-import 'package:southsea_cinema/screens/settings_screen.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
+import 'package:southsea_cinema/screens/menu_screen.dart';
+import 'package:southsea_cinema/screens/settings_screen.dart';
 
 void main() {
   setUp(() {
@@ -46,5 +46,28 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(SettingsScreen), findsOneWidget);
+  });
+
+  testWidgets('MenuScreen shows an error message when the films cannot load', (
+    WidgetTester tester,
+  ) async {
+    tester.binding.defaultBinaryMessenger.setMockMessageHandler(
+      'flutter/assets',
+      (message) async {
+        return null;
+      },
+    );
+    addTearDown(() {
+      tester.binding.defaultBinaryMessenger.setMockMessageHandler(
+        'flutter/assets',
+        null,
+      );
+    });
+
+    await tester.pumpWidget(const MaterialApp(home: MenuScreen()));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('Could not load the films'), findsOneWidget);
+    expect(find.text('How To Train Your Dragon'), findsNothing);
   });
 }

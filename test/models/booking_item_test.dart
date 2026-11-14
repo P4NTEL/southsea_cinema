@@ -26,6 +26,19 @@ void main() {
     expect(map.containsKey('id'), isFalse);
   });
 
+  test('toMap includes the id when the item already has one', () {
+    const BookingItem savedItem = BookingItem(
+      id: 4,
+      movieId: 'movie-1',
+      movieTitle: 'Joker',
+      movieDatetime: 'Sunday 4 Oct 2026 15:00',
+      unitPrice: 6.0,
+      quantity: 3,
+    );
+
+    expect(savedItem.toMap(7)['id'], 4);
+  });
+
   test('fromMap rebuilds the item, reading whole prices as doubles', () {
     final BookingItem rebuilt = BookingItem.fromMap(<String, Object?>{
       'id': 4,

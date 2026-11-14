@@ -301,4 +301,36 @@ void main() {
     expect(find.textContaining('Test Movie Three'), findsOneWidget);
     expect(BasketRepository.instance.getItems().length, 2);
   });
+
+  testWidgets('UPDATE ORDER goes back to the home page', (
+    WidgetTester tester,
+  ) async {
+    useTallWindow(tester);
+    BasketRepository.instance.addItem(
+      const BasketItem(movie: testMovie, quantity: 1),
+    );
+
+    await tester.runAsync(() async {
+      await tester.pumpWidget(
+        MaterialApp(
+          initialRoute: '/basket',
+          routes: <String, WidgetBuilder>{
+            '/': (BuildContext context) {
+              return const Scaffold(body: Text('Home page'));
+            },
+            '/basket': (BuildContext context) {
+              return const BasketScreen();
+            },
+          },
+        ),
+      );
+      await tester.pumpAndSettle();
+    });
+    await tester.pump();
+
+    await tester.tap(find.text('UPDATE ORDER'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Home page'), findsOneWidget);
+  });
 }
