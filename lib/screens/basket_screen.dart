@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/database/cinema_db.dart';
 import 'package:southsea_cinema/models/booking.dart';
+import 'package:southsea_cinema/models/booking_item.dart';
 import 'package:southsea_cinema/models/basket_item.dart';
 import 'package:southsea_cinema/repositories/basket_repository.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
@@ -19,6 +20,7 @@ class BasketScreen extends StatefulWidget {
 class _BasketScreenState extends State<BasketScreen> {
   String _confirmationMessage = '';
   List<Booking> _bookings = [];
+  Map<int, List<BookingItem>> _bookingItems = {};
   String _bookingsError = '';
 
   @override
@@ -31,11 +33,22 @@ class _BasketScreenState extends State<BasketScreen> {
     try {
       final List<Booking> bookings =
           await CinemaDatabase.instance.getAllBookings();
+
+      final Map<int, List<BookingItem>> bookingItems = {};
+      for (final Booking booking in bookings) {
+        final int? bookingId = booking.id;
+        if (bookingId != null) {
+          bookingItems[bookingId] =
+              await CinemaDatabase.instance.getBookingItems(bookingId);
+        }
+      }
+
       if (!mounted) {
         return;
       }
       setState(() {
         _bookings = bookings;
+        _bookingItems = bookingItems;
         _bookingsError = '';
       });
     } catch (error) {
@@ -82,7 +95,20 @@ class _BasketScreenState extends State<BasketScreen> {
         date: date,
       );
 
-      await database.insertBooking(booking);
+      final List<BookingItem> bookingItems = [];
+      for (final BasketItem item in items) {
+        bookingItems.add(
+          BookingItem(
+            movieId: item.movie.id,
+            movieTitle: item.movie.title,
+            movieDatetime: item.movie.datetime,
+            unitPrice: item.movie.adultprice,
+            quantity: item.quantity,
+          ),
+        );
+      }
+
+      await database.insertBooking(booking, items: bookingItems);
       basket.clear();
       if (!mounted) {
         return;
@@ -99,6 +125,27 @@ class _BasketScreenState extends State<BasketScreen> {
         _confirmationMessage = 'Could not save your booking: $error';
       });
     }
+  }
+
+  List<Widget> _buildBookingLines(Booking booking) {
+    final List<BookingItem> items = _bookingItems[booking.id] ?? [];
+
+    // Bookings saved before items were stored only have the summary.
+    if (items.isEmpty) {
+      return [Text(booking.summary)];
+    }
+
+    final List<Widget> lines = [];
+    for (final BookingItem item in items) {
+      lines.add(
+        Text(
+          '${item.quantity} x ${item.movieTitle} at ${item.movieDatetime}'
+          ' - £${item.unitPrice.toStringAsFixed(2)} each:'
+          ' £${item.lineTotal.toStringAsFixed(2)}',
+        ),
+      );
+    }
+    return lines;
   }
 
   Widget _buildBookingCard(Booking booking) {
@@ -123,7 +170,7 @@ class _BasketScreenState extends State<BasketScreen> {
               ],
             ),
             const SizedBox(height: 4),
-            Text(booking.summary),
+            ..._buildBookingLines(booking),
             const SizedBox(height: 4),
             Text(
               booking.date,
